@@ -9,11 +9,11 @@ import static org.hamcrest.Matchers.notNullValue;
 
 
 @RunWith(Parameterized.class)
-    public class OrderCreation{
+    public class TestOrderCreation {
     File json;
     String URL = "http://qa-scooter.praktikum-services.ru";
 
-    public OrderCreation(File json) {
+    public TestOrderCreation(File json) {
         this.json = json;
     }
 

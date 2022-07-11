@@ -7,7 +7,7 @@ import static io.restassured.RestAssured.given;
 import static org.apache.http.HttpStatus.*;
 import static org.junit.Assert.assertEquals;
 
-public class CourierLogin {
+public class TestCourierLogin {
     String URL = "http://qa-scooter.praktikum-services.ru";
     static Integer id;
 

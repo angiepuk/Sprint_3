@@ -6,7 +6,7 @@ import static org.apache.http.HttpStatus.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-public class CourierCreation {
+public class TestCourierCreation {
 
 
     public String URL = "http://qa-scooter.praktikum-services.ru";

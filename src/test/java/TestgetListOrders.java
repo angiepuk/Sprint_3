@@ -4,7 +4,7 @@ import static io.restassured.RestAssured.given;
 import static org.apache.http.HttpStatus.SC_OK;
 import static org.hamcrest.Matchers.notNullValue;
 
-public class getListOrders {
+public class TestgetListOrders {
     String URL = "http://qa-scooter.praktikum-services.ru";
 
     @Test
