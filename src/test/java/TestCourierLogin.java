@@ -12,7 +12,7 @@ import static org.junit.Assert.assertEquals;
 public class TestCourierLogin {
     String URL = "http://qa-scooter.praktikum-services.ru";
     static Integer id;
-
+    public String endPointLogin = "/api/v1/courier/login";
        @BeforeClass
     public static void create_courier_before_test() {
         CourierForCreation courierForCreation = new CourierForCreation("Agent333", "Parrot333", "Roman");
@@ -49,7 +49,7 @@ public class TestCourierLogin {
                 .header("Content-Type", "application/json")
                 .log().all()
                 .body(courierForLogin)
-                .post(URL + "/api/v1/courier/login");
+                .post(URL + endPointLogin);
 
         response.then().log().all().assertThat().body("id", notNullValue()).and().statusCode(SC_OK);
     }
@@ -64,7 +64,7 @@ public class TestCourierLogin {
                 .header("Content-Type", "application/json")
                 .log().all()
                 .body(courierForLogin)
-                .post(URL + "/api/v1/courier/login")
+                .post(URL + endPointLogin)
                 .then()
                 .log().all()
                 .statusCode(SC_BAD_REQUEST)
@@ -84,7 +84,7 @@ public class TestCourierLogin {
                 .header("Content-Type", "application/json")
                 .log().all()
                 .body(courierForLogin)
-                .post(URL + "/api/v1/courier/login")
+                .post(URL + endPointLogin)
                 .then()
                 .log().all()
                 .statusCode(SC_NOT_FOUND)
@@ -104,7 +104,7 @@ public class TestCourierLogin {
                 .header("Content-Type", "application/json")
                 .log().all()
                 .body(courierForLogin)
-                .post(URL + "/api/v1/courier/login")
+                .post(URL + endPointLogin)
                 .then()
                 .log().all()
                 .statusCode(SC_BAD_REQUEST)
@@ -123,7 +123,7 @@ public class TestCourierLogin {
                 .header("Content-Type", "application/json")
                 .log().all()
                 .body(courierForLogin)
-                .post(URL + "/api/v1/courier/login")
+                .post(URL + endPointLogin)
                 .then()
                 .log().all()
                 .statusCode(SC_NOT_FOUND)
@@ -141,7 +141,7 @@ public class TestCourierLogin {
                 .header("Content-Type", "application/json")
                 .log().all()
                 .body(courierForLogin)
-                .post(URL + "/api/v1/courier/login");
+                .post(URL + endPointLogin);
 
         response.then().log().all().assertThat().body("id", notNullValue()).and().statusCode(SC_OK);
     }

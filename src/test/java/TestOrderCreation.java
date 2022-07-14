@@ -35,7 +35,7 @@ import static org.hamcrest.Matchers.notNullValue;
                 .log().all()
                 .body(json)
                 .when()
-                .post(URL + "/api/v1/orders");
+                .post(URL + TestGetListOrders.endPointOrders);
 
         response.then().log().all().assertThat().body("track", notNullValue()).and().statusCode(SC_CREATED);
     }
