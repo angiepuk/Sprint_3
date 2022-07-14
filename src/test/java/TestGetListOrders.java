@@ -1,17 +1,19 @@
 import io.restassured.response.Response;
 import org.junit.Test;
+import ru.yandex.scooter.api.Url;
+
 import static io.restassured.RestAssured.given;
 import static org.apache.http.HttpStatus.SC_OK;
 import static org.hamcrest.Matchers.notNullValue;
 
 public class TestGetListOrders {
-    String URL = "http://qa-scooter.praktikum-services.ru";
+
     public static String endPointOrders = "/api/v1/orders";
     @Test
     public void test() {
         Response response = given()
                 .header("Content-Type", "Application/json")
-                .get(URL + endPointOrders);
+                .get(Url.URL + endPointOrders);
 
         response.then().log().all().assertThat().body("orders", notNullValue()).and().statusCode(SC_OK);
     }

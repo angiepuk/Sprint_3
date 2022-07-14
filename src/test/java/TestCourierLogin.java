@@ -3,6 +3,7 @@ import POJO.CourierForLogin;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import org.junit.*;
+import ru.yandex.scooter.api.Url;
 
 import static io.restassured.RestAssured.given;
 import static org.apache.http.HttpStatus.*;
@@ -10,7 +11,6 @@ import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertEquals;
 
 public class TestCourierLogin {
-    String URL = "http://qa-scooter.praktikum-services.ru";
     static Integer id;
     public String endPointLogin = "/api/v1/courier/login";
        @BeforeClass
@@ -49,7 +49,7 @@ public class TestCourierLogin {
                 .header("Content-Type", "application/json")
                 .log().all()
                 .body(courierForLogin)
-                .post(URL + endPointLogin);
+                .post(Url.URL + endPointLogin);
 
         response.then().log().all().assertThat().body("id", notNullValue()).and().statusCode(SC_OK);
     }
@@ -64,7 +64,7 @@ public class TestCourierLogin {
                 .header("Content-Type", "application/json")
                 .log().all()
                 .body(courierForLogin)
-                .post(URL + endPointLogin)
+                .post(Url.URL + endPointLogin)
                 .then()
                 .log().all()
                 .statusCode(SC_BAD_REQUEST)
@@ -84,7 +84,7 @@ public class TestCourierLogin {
                 .header("Content-Type", "application/json")
                 .log().all()
                 .body(courierForLogin)
-                .post(URL + endPointLogin)
+                .post(Url.URL + endPointLogin)
                 .then()
                 .log().all()
                 .statusCode(SC_NOT_FOUND)
@@ -104,7 +104,7 @@ public class TestCourierLogin {
                 .header("Content-Type", "application/json")
                 .log().all()
                 .body(courierForLogin)
-                .post(URL + endPointLogin)
+                .post(Url.URL + endPointLogin)
                 .then()
                 .log().all()
                 .statusCode(SC_BAD_REQUEST)
@@ -123,7 +123,7 @@ public class TestCourierLogin {
                 .header("Content-Type", "application/json")
                 .log().all()
                 .body(courierForLogin)
-                .post(URL + endPointLogin)
+                .post(Url.URL + endPointLogin)
                 .then()
                 .log().all()
                 .statusCode(SC_NOT_FOUND)
@@ -141,7 +141,7 @@ public class TestCourierLogin {
                 .header("Content-Type", "application/json")
                 .log().all()
                 .body(courierForLogin)
-                .post(URL + endPointLogin);
+                .post(Url.URL + endPointLogin);
 
         response.then().log().all().assertThat().body("id", notNullValue()).and().statusCode(SC_OK);
     }

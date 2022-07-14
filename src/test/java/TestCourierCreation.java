@@ -1,6 +1,8 @@
 
 import POJO.CourierForCreation;
 import org.junit.Test;
+import ru.yandex.scooter.api.Url;
+
 import static io.restassured.RestAssured.given;
 import static org.apache.http.HttpStatus.*;
 import static org.junit.Assert.assertEquals;
@@ -8,8 +10,6 @@ import static org.junit.Assert.assertTrue;
 
 public class TestCourierCreation {
 
-
-    public String URL = "http://qa-scooter.praktikum-services.ru";
     public String endPointCreation = "/api/v1/courier";
     //курьера можно создать
     @Test
@@ -22,7 +22,7 @@ public class TestCourierCreation {
                    .log().all()
                    .body(courierForCreation)
                    .when()
-                   .post(URL + endPointCreation)
+                   .post(Url.URL + endPointCreation)
                    .then()
                    .log().all()
                    .statusCode(SC_CREATED)
@@ -43,7 +43,7 @@ public class TestCourierCreation {
                 .header("Content-type", "application/json")
                 .body(courierForCreation)
                 .when()
-                .post(URL + endPointCreation)
+                .post(Url.URL + endPointCreation)
                 .then()
                 .log().all()
                 .statusCode(SC_CREATED);
@@ -53,7 +53,7 @@ public class TestCourierCreation {
                 .header("Content-type", "application/json")
                 .body(courierForCreation)
                 .when()
-                .post(URL + endPointCreation)
+                .post(Url.URL + endPointCreation)
                 .then()
                 .log().all()
                 .statusCode(SC_CONFLICT)
@@ -74,7 +74,7 @@ public class TestCourierCreation {
                 .header("Content-type", "application/json")
                 .body(courierForCreation)
                 .when()
-                .post(URL + endPointCreation)
+                .post(Url.URL + endPointCreation)
                 .then()
                 .log().all()
                 .statusCode(SC_BAD_REQUEST)
@@ -94,7 +94,7 @@ public class TestCourierCreation {
                 .header("Content-type", "application/json")
                 .body(courierForCreation)
                 .when()
-                .post(URL + endPointCreation)
+                .post(Url.URL + endPointCreation)
                 .then()
                 .statusCode(SC_CREATED)
                 .extract()
@@ -112,7 +112,7 @@ public class TestCourierCreation {
                 .header("Content-type", "application/json")
                 .body(courierForCreation)
                 .when()
-                .post(URL + endPointCreation)
+                .post(Url.URL + endPointCreation)
                 .then()
                 .statusCode(201);
     }
@@ -129,7 +129,7 @@ public class TestCourierCreation {
                 .header("Content-type", "application/json")
                 .body(courierForCreation)
                 .when()
-                .post(URL + endPointCreation)
+                .post(Url.URL + endPointCreation)
                 .then()
                 .log().all()
                 .statusCode(SC_BAD_REQUEST)
@@ -149,7 +149,7 @@ public class TestCourierCreation {
                     .header("Content-type", "application/json")
                     .body(courierForCreation)
                     .when()
-                    .post(URL + endPointCreation)
+                    .post(Url.URL + endPointCreation)
                     .then()
                     .log().all()
                     .statusCode(SC_CREATED);
@@ -159,7 +159,7 @@ public class TestCourierCreation {
                     .header("Content-type", "application/json")
                     .body(courierForCreation)
                     .when()
-                    .post(URL + endPointCreation)
+                    .post(Url.URL + endPointCreation)
                     .then()
                     .log().all()
                     .statusCode(SC_CONFLICT)
