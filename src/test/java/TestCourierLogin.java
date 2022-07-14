@@ -1,10 +1,12 @@
 import POJO.CourierForCreation;
 import POJO.CourierForLogin;
 import io.restassured.RestAssured;
+import io.restassured.response.Response;
 import org.junit.*;
 
 import static io.restassured.RestAssured.given;
 import static org.apache.http.HttpStatus.*;
+import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertEquals;
 
 public class TestCourierLogin {
@@ -43,16 +45,13 @@ public class TestCourierLogin {
 
         CourierForLogin courierForLogin = new CourierForLogin("Agent33", "Parrot33");
 
-         given()
+        Response response = given()
                 .header("Content-Type", "application/json")
                 .log().all()
                 .body(courierForLogin)
-                .post(URL + "/api/v1/courier/login")
-                .then()
-                .log().all()
-                .statusCode(SC_OK)
-                .extract()
-                .path("id");
+                .post(URL + "/api/v1/courier/login");
+
+        response.then().log().all().assertThat().body("id", notNullValue()).and().statusCode(SC_OK);
     }
 
     //для авторизации нужно передать все обязательные поля
