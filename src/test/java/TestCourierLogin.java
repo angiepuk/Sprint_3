@@ -15,7 +15,7 @@ public class TestCourierLogin {
 
        @BeforeClass
     public static void create_courier_before_test() {
-        CourierForCreation courierForCreation = new CourierForCreation("Agent33", "Parrot33", "Roman");
+        CourierForCreation courierForCreation = new CourierForCreation("Agent333", "Parrot333", "Roman");
         given()
                 .header("Content-Type", "application/json")
                 .log().all()
@@ -136,20 +136,17 @@ public class TestCourierLogin {
     @Test
     public void successful_request_return_id() {
         CourierForLogin courierForLogin = new CourierForLogin("Agent33", "Parrot33");
-        id = given()
+
+        Response response = given()
                 .header("Content-Type", "application/json")
                 .log().all()
                 .body(courierForLogin)
-                .post(URL + "/api/v1/courier/login")
-                .then()
-                .log().all()
-                .statusCode(SC_OK)
-                .extract()
-                .body()
-                .path("id");
-        System.out.println("Айдишник курьера " + id);
+                .post(URL + "/api/v1/courier/login");
+
+        response.then().log().all().assertThat().body("id", notNullValue()).and().statusCode(SC_OK);
+    }
     }
 
-}
+
 
 
