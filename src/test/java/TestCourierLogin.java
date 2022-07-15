@@ -1,6 +1,7 @@
 import POJO.CourierForCreation;
 import POJO.CourierForLogin;
 import io.restassured.RestAssured;
+import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.junit.*;
 import ru.yandex.scooter.api.EndPoint;
@@ -21,7 +22,7 @@ public class TestCourierLogin {
     public static void create_courier_before_test() {
         CourierForCreation courierForCreation = new CourierForCreation("Agent333", "Parrot333", "Roman");
         given()
-                .header("Content-Type", "application/json")
+                .contentType(ContentType.JSON)
                 .log().all()
                 .body(courierForCreation)
                 .when()
@@ -37,7 +38,7 @@ public class TestCourierLogin {
     public static void delete_courier_after_test() {
         String idCourier = Integer.toString(id);
         RestAssured.with()
-                .header("Content-Type", "application/json")
+                .contentType(ContentType.JSON)
                 .log().all()
                 .delete(baseURI+COURIER+"/{idCourier}", idCourier)
                 .then()
@@ -52,7 +53,7 @@ public class TestCourierLogin {
         CourierForLogin courierForLogin = new CourierForLogin("Agent33", "Parrot33");
 
         Response response = given()
-                .header("Content-Type", "application/json")
+                .contentType(ContentType.JSON)
                 .log().all()
                 .body(courierForLogin)
                 .post(baseURI + LOGIN);
@@ -67,7 +68,7 @@ public class TestCourierLogin {
 
         String error = "Недостаточно данных для входа";
         String response = given()
-                .header("Content-Type", "application/json")
+                .contentType(ContentType.JSON)
                 .log().all()
                 .body(courierForLogin)
                 .post(baseURI + LOGIN)
@@ -87,7 +88,7 @@ public class TestCourierLogin {
 
         String error = "Учетная запись не найдена";
         String response = given()
-                .header("Content-Type", "application/json")
+                .contentType(ContentType.JSON)
                 .log().all()
                 .body(courierForLogin)
                 .post(baseURI + LOGIN)
@@ -107,7 +108,7 @@ public class TestCourierLogin {
 
         String error = "Недостаточно данных для входа";
         String response = given()
-                .header("Content-Type", "application/json")
+                .contentType(ContentType.JSON)
                 .log().all()
                 .body(courierForLogin)
                 .post(baseURI + LOGIN)
@@ -126,7 +127,7 @@ public class TestCourierLogin {
 
         String error = "Учетная запись не найдена";
         String response = given()
-                .header("Content-Type", "application/json")
+                .contentType(ContentType.JSON)
                 .log().all()
                 .body(courierForLogin)
                 .post(baseURI + LOGIN)
@@ -144,7 +145,7 @@ public class TestCourierLogin {
         CourierForLogin courierForLogin = new CourierForLogin("Agent33", "Parrot33");
 
         Response response = given()
-                .header("Content-Type", "application/json")
+                .contentType(ContentType.JSON)
                 .log().all()
                 .body(courierForLogin)
                 .post(baseURI + LOGIN);

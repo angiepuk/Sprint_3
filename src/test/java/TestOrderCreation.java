@@ -1,3 +1,4 @@
+import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -35,7 +36,7 @@ import static ru.yandex.scooter.api.EndPoint.ORDER;
 
         Response response =
                  given()
-                .header("Content-Type", "application/json")
+                .contentType(ContentType.JSON)
                 .log().all()
                 .body(json)
                 .when()

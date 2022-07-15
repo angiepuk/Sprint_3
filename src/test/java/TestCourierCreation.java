@@ -1,5 +1,6 @@
 
 import POJO.CourierForCreation;
+import io.restassured.http.ContentType;
 import org.junit.Test;
 
 import static io.restassured.RestAssured.baseURI;
@@ -41,7 +42,7 @@ public class TestCourierCreation {
         String error = "Этот логин уже используется. Попробуйте другой.";
         given()
                 .log().all()
-                .header("Content-type", "application/json")
+                .contentType(ContentType.JSON)
                 .body(courierForCreation)
                 .when()
                 .post(baseURI + COURIER)
@@ -51,7 +52,7 @@ public class TestCourierCreation {
 
        String response = given()
                 .log().all()
-                .header("Content-type", "application/json")
+                .contentType(ContentType.JSON)
                 .body(courierForCreation)
                 .when()
                 .post(baseURI + COURIER)
@@ -72,7 +73,7 @@ public class TestCourierCreation {
 
         String response = given()
                 .log().all()
-                .header("Content-type", "application/json")
+                .contentType(ContentType.JSON)
                 .body(courierForCreation)
                 .when()
                 .post(baseURI + COURIER)
@@ -92,7 +93,7 @@ public class TestCourierCreation {
 
         boolean ok = given()
                 .log().all()
-                .header("Content-type", "application/json")
+                .contentType(ContentType.JSON)
                 .body(courierForCreation)
                 .when()
                 .post(baseURI + COURIER)
@@ -110,7 +111,7 @@ public class TestCourierCreation {
 
         given()
                 .log().all()
-                .header("Content-type", "application/json")
+                .contentType(ContentType.JSON)
                 .body(courierForCreation)
                 .when()
                 .post(baseURI + COURIER)
@@ -127,7 +128,7 @@ public class TestCourierCreation {
         String error = "Недостаточно данных для создания учетной записи";
         String response = given()
                 .log().all()
-                .header("Content-type", "application/json")
+                .contentType(ContentType.JSON)
                 .body(courierForCreation)
                 .when()
                 .post(baseURI + COURIER)
@@ -147,7 +148,7 @@ public class TestCourierCreation {
             String error = "Этот логин уже используется. Попробуйте другой.";
             given()
                     .log().all()
-                    .header("Content-type", "application/json")
+                    .contentType(ContentType.JSON)
                     .body(courierForCreation)
                     .when()
                     .post(baseURI + COURIER)
@@ -157,7 +158,7 @@ public class TestCourierCreation {
 
             String response = given()
                     .log().all()
-                    .header("Content-type", "application/json")
+                    .contentType(ContentType.JSON)
                     .body(courierForCreation)
                     .when()
                     .post(baseURI + COURIER)

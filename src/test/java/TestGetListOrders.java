@@ -1,3 +1,4 @@
+import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.junit.Test;
 import ru.yandex.scooter.api.EndPoint;
@@ -14,7 +15,7 @@ public class TestGetListOrders {
     @Test
     public void test() {
         Response response = given()
-                .header("Content-Type", "Application/json")
+                .contentType(ContentType.JSON)
                 .get(baseURI + ORDER);
 
         response.then().log().all().assertThat().body("orders", notNullValue()).and().statusCode(SC_OK);
