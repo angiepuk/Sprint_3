@@ -3,16 +3,20 @@ import POJO.CourierForLogin;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import org.junit.*;
-import ru.yandex.scooter.api.Url;
+import ru.yandex.scooter.api.EndPoint;
 
+import static io.restassured.RestAssured.baseURI;
 import static io.restassured.RestAssured.given;
 import static org.apache.http.HttpStatus.*;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertEquals;
+import static ru.yandex.scooter.api.EndPoint.COURIER;
+import static ru.yandex.scooter.api.EndPoint.LOGIN;
 
 public class TestCourierLogin {
     static Integer id;
-    public String endPointLogin = "/api/v1/courier/login";
+
+
        @BeforeClass
     public static void create_courier_before_test() {
         CourierForCreation courierForCreation = new CourierForCreation("Agent333", "Parrot333", "Roman");
@@ -21,11 +25,13 @@ public class TestCourierLogin {
                 .log().all()
                 .body(courierForCreation)
                 .when()
-                .post("http://qa-scooter.praktikum-services.ru/api/v1/courier")
+                .post(baseURI+COURIER)
                 .then()
                 .log().all()
                 .statusCode(SC_CREATED);
     }
+
+
 
     @AfterClass
     public static void delete_courier_after_test() {
@@ -33,7 +39,7 @@ public class TestCourierLogin {
         RestAssured.with()
                 .header("Content-Type", "application/json")
                 .log().all()
-                .delete("http://qa-scooter.praktikum-services.ru/api/v1/courier/{idCourier}", idCourier)
+                .delete(baseURI+COURIER+"/{idCourier}", idCourier)
                 .then()
                 .statusCode(SC_OK);
     }
@@ -49,7 +55,7 @@ public class TestCourierLogin {
                 .header("Content-Type", "application/json")
                 .log().all()
                 .body(courierForLogin)
-                .post(Url.URL + endPointLogin);
+                .post(baseURI + LOGIN);
 
         response.then().log().all().assertThat().body("id", notNullValue()).and().statusCode(SC_OK);
     }
@@ -64,7 +70,7 @@ public class TestCourierLogin {
                 .header("Content-Type", "application/json")
                 .log().all()
                 .body(courierForLogin)
-                .post(Url.URL + endPointLogin)
+                .post(baseURI + LOGIN)
                 .then()
                 .log().all()
                 .statusCode(SC_BAD_REQUEST)
@@ -84,7 +90,7 @@ public class TestCourierLogin {
                 .header("Content-Type", "application/json")
                 .log().all()
                 .body(courierForLogin)
-                .post(Url.URL + endPointLogin)
+                .post(baseURI + LOGIN)
                 .then()
                 .log().all()
                 .statusCode(SC_NOT_FOUND)
@@ -104,7 +110,7 @@ public class TestCourierLogin {
                 .header("Content-Type", "application/json")
                 .log().all()
                 .body(courierForLogin)
-                .post(Url.URL + endPointLogin)
+                .post(baseURI + LOGIN)
                 .then()
                 .log().all()
                 .statusCode(SC_BAD_REQUEST)
@@ -123,7 +129,7 @@ public class TestCourierLogin {
                 .header("Content-Type", "application/json")
                 .log().all()
                 .body(courierForLogin)
-                .post(Url.URL + endPointLogin)
+                .post(baseURI + LOGIN)
                 .then()
                 .log().all()
                 .statusCode(SC_NOT_FOUND)
@@ -141,7 +147,7 @@ public class TestCourierLogin {
                 .header("Content-Type", "application/json")
                 .log().all()
                 .body(courierForLogin)
-                .post(Url.URL + endPointLogin);
+                .post(baseURI + LOGIN);
 
         response.then().log().all().assertThat().body("id", notNullValue()).and().statusCode(SC_OK);
     }
