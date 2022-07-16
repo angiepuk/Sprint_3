@@ -34,15 +34,17 @@ import static ru.yandex.scooter.api.EndPoint.ORDER;
     @Test
     public void create_new_order() {
 
-        Response response =
-                 given()
+        given()
                 .contentType(ContentType.JSON)
                 .log().all()
                 .body(json)
                 .when()
-                .post(baseURI + ORDER);
-
-        response.then().log().all().assertThat().body("track", notNullValue()).and().statusCode(SC_CREATED);
+                .post(baseURI + ORDER)
+                .then()
+                .assertThat()
+                .body("track", notNullValue())
+                .and()
+                .statusCode(SC_CREATED);
     }
 }
 

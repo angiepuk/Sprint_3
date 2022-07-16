@@ -7,6 +7,7 @@ import static io.restassured.RestAssured.baseURI;
 import static io.restassured.RestAssured.given;
 import static org.apache.http.HttpStatus.SC_OK;
 import static org.hamcrest.Matchers.notNullValue;
+import static ru.yandex.scooter.api.EndPoint.BASE_URL;
 import static ru.yandex.scooter.api.EndPoint.ORDER;
 
 public class TestGetListOrders {
@@ -14,11 +15,17 @@ public class TestGetListOrders {
 
     @Test
     public void test() {
-        Response response = given()
+        given()
                 .contentType(ContentType.JSON)
-                .get(baseURI + ORDER);
-
-        response.then().log().all().assertThat().body("orders", notNullValue()).and().statusCode(SC_OK);
+                .baseUri(BASE_URL)
+                .when()
+                .get(ORDER)
+                .then()
+                .assertThat()
+                .log().all()
+                .body("orders", notNullValue())
+                .and()
+                .statusCode(SC_OK);
     }
 }
 

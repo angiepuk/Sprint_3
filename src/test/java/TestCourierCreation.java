@@ -1,6 +1,7 @@
 
 import POJO.CourierForCreation;
 import io.restassured.http.ContentType;
+import org.hamcrest.Matchers;
 import org.junit.Test;
 
 import static io.restassured.RestAssured.baseURI;
@@ -8,6 +9,7 @@ import static io.restassured.RestAssured.given;
 import static org.apache.http.HttpStatus.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static ru.yandex.scooter.api.EndPoint.BASE_URL;
 import static ru.yandex.scooter.api.EndPoint.COURIER;
 
 public class TestCourierCreation {
@@ -19,18 +21,19 @@ public class TestCourierCreation {
 
         CourierForCreation courierForCreation = CourierForCreation.getRandomCourier();
 
-           boolean ok = given()
+            given()
                    .header("Content-Type", "application/json")
+                    .baseUri(BASE_URL)
                    .log().all()
                    .body(courierForCreation)
                    .when()
-                   .post(baseURI + COURIER)
+                   .post(COURIER)
                    .then()
                    .log().all()
+                   .assertThat()
                    .statusCode(SC_CREATED)
-                   .extract()
-                   .path("ok");
-           assertTrue(ok);
+                   .and()
+                   .body("ok", Matchers.is(true));
        }
 
 //нельзя создать двух одинаковых курьеров
@@ -39,29 +42,31 @@ public class TestCourierCreation {
 
         CourierForCreation courierForCreation = CourierForCreation.getRandomCourier();
 
-        String error = "Этот логин уже используется. Попробуйте другой.";
         given()
                 .log().all()
                 .contentType(ContentType.JSON)
+                .baseUri(BASE_URL)
                 .body(courierForCreation)
                 .when()
-                .post(baseURI + COURIER)
+                .post(COURIER)
                 .then()
                 .log().all()
                 .statusCode(SC_CREATED);
 
-       String response = given()
+       given()
                 .log().all()
                 .contentType(ContentType.JSON)
+                .baseUri(BASE_URL)
                 .body(courierForCreation)
                 .when()
-                .post(baseURI + COURIER)
+                .post(COURIER)
                 .then()
                 .log().all()
+                .assertThat()
                 .statusCode(SC_CONFLICT)
-                .extract()
-                .path("message");
-       assertEquals(error, response);
+                .and()
+                .body("message", Matchers.is("Этот логин уже используется. Попробуйте другой."));
+
     }
 
 //чтобы создать курьера, нужно передать в ручку все обязательные поля
@@ -69,20 +74,19 @@ public class TestCourierCreation {
     public void should_be_all_required_fields_for_creation(){
 
         CourierForCreation courierForCreation = new CourierForCreation(null, null, null);
-        String error = "Недостаточно данных для создания учетной записи";
 
-        String response = given()
+        given()
                 .log().all()
                 .contentType(ContentType.JSON)
+                .baseUri(BASE_URL)
                 .body(courierForCreation)
                 .when()
-                .post(baseURI + COURIER)
+                .post(COURIER)
                 .then()
                 .log().all()
                 .statusCode(SC_BAD_REQUEST)
-                .extract()
-                .path("message");
-        assertEquals(error, response);
+                .and()
+                .body("message", Matchers.is("Недостаточно данных для создания учетной записи"));
     }
 
 //успешный запрос возвращает ok: true
@@ -91,17 +95,19 @@ public class TestCourierCreation {
 
         CourierForCreation courierForCreation = CourierForCreation.getRandomCourier();
 
-        boolean ok = given()
+        given()
+                .header("Content-Type", "application/json")
+                .baseUri(BASE_URL)
                 .log().all()
-                .contentType(ContentType.JSON)
                 .body(courierForCreation)
                 .when()
-                .post(baseURI + COURIER)
+                .post(COURIER)
                 .then()
+                .log().all()
+                .assertThat()
                 .statusCode(SC_CREATED)
-                .extract()
-                .path("ok");
-        assertTrue(ok);
+                .and()
+                .body("ok", Matchers.is(true));
     }
 //запрос возвращает правильный код ответа
     @Test
@@ -112,11 +118,13 @@ public class TestCourierCreation {
         given()
                 .log().all()
                 .contentType(ContentType.JSON)
+                .baseUri(BASE_URL)
                 .body(courierForCreation)
                 .when()
-                .post(baseURI + COURIER)
+                .post(COURIER)
                 .then()
-                .statusCode(201);
+                .assertThat()
+                .statusCode(SC_CREATED);
     }
 
 //если одного из полей нет, запрос возвращает ошибку;
@@ -125,19 +133,20 @@ public class TestCourierCreation {
 
         CourierForCreation courierForCreation = CourierForCreation.getRandomCourierWithoutLogin();
 
-        String error = "Недостаточно данных для создания учетной записи";
-        String response = given()
+
+        given()
                 .log().all()
                 .contentType(ContentType.JSON)
+                .baseUri(BASE_URL)
                 .body(courierForCreation)
                 .when()
-                .post(baseURI + COURIER)
+                .post(COURIER)
                 .then()
                 .log().all()
+                .assertThat()
                 .statusCode(SC_BAD_REQUEST)
-                .extract()
-                .path("message");
-        assertEquals(response, error);
+                .and()
+                .body("message",Matchers.is( "Недостаточно данных для создания учетной записи"));
     }
 //если создать пользователя с логином, который уже есть, возвращается ошибка.
         @Test
@@ -145,29 +154,30 @@ public class TestCourierCreation {
 
             CourierForCreation courierForCreation = CourierForCreation.getRandomCourier();
 
-            String error = "Этот логин уже используется. Попробуйте другой.";
             given()
                     .log().all()
                     .contentType(ContentType.JSON)
+                    .baseUri(BASE_URL)
                     .body(courierForCreation)
                     .when()
-                    .post(baseURI + COURIER)
+                    .post(COURIER)
                     .then()
                     .log().all()
                     .statusCode(SC_CREATED);
 
-            String response = given()
+            given()
                     .log().all()
                     .contentType(ContentType.JSON)
+                    .baseUri(BASE_URL)
                     .body(courierForCreation)
                     .when()
-                    .post(baseURI + COURIER)
+                    .post(COURIER)
                     .then()
                     .log().all()
+                    .assertThat()
                     .statusCode(SC_CONFLICT)
-                    .extract()
-                    .path("message");
-            assertEquals(error, response);
+                    .and()
+                    .body("message", Matchers.is("Этот логин уже используется. Попробуйте другой."));
         }
 
 
