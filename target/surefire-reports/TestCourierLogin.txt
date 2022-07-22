@@ -1,0 +1,11 @@
+-------------------------------------------------------------------------------
+Test set: TestCourierLogin
+-------------------------------------------------------------------------------
+Tests run: 6, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 61.128 s <<< FAILURE! - in TestCourierLogin
+without_one_field(TestCourierLogin)  Time elapsed: 60.179 s  <<< FAILURE!
+java.lang.AssertionError: 
+1 expectation failed.
+Expected status code <400> but was <504>.
+
+	at TestCourierLogin.without_one_field(TestCourierLogin.java:111)
+
